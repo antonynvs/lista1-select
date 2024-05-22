@@ -1,12 +1,24 @@
 use avaliacao_222b;
 
+--  Inserir um Novo Livro: Insira um livro chamado "As Crônicas de Nárnia", de C.S. Lewis, publicado em 1950, disponível, na categoria "Fantasia", com ISBN '978-0064471190', editora "HarperCollins", 768 páginas, idioma "Inglês".
+
 insert into livros(titulo, autor, ano_publicacao, disponivel, categoria, isbn, editora, quantidade_paginas, idioma) values
 ("As Crônicas de Nárnia", "C.S. Lewis", 1950, true, "Fantasia", "978-0064471190", "HarperCollins", 768, "Inglês");
+
+-- Inserir Múltiplos Livros: Insira três livros de uma vez:
 
 insert into livros(titulo, autor, ano_publicacao, disponivel, categoria, isbn, editora, quantidade_paginas, idioma) values
 ("Cem Anos de Solidão", "Gabriel Garcia Marquez", 1967, true, "Ficção", '978-0241968581', "Penguin Books", 422, "Espanhol"),
 ("Harry Potter e a Pedra Filosofal", "J.K. Rowling", 1997, true, "Fantasia", '978-0439708180', "Bloomsbury", 309, "Inglês"),
 ("O Senhor dos Anéis: A Sociedade do Anel", "J.R.R. Tolkien", 1954, true, "Fantasia", '978-0618640157', "HarperCollins", 423, "Inglês");
+
+-- Inserir Livro com Categoria Específica: Adicione um livro na categoria "História" com detalhes fictícios.
+
+INSERT INTO livros (titulo, autor, ano_publicacao, disponivel, categoria, isbn, editora, quantidade_paginas, idioma)
+VALUES ('A Fascinante História das Civilizações', 'Antony', 2024, true, 'História', '978-0616540157', 'Bloomsbury', 654, 'Português');
+
+
+-- Atualizar Disponibilidade: Altere o status de disponibilidade de todos os livros publicados antes de 2000 para FALSE.
 
 UPDATE livros
 SET disponivel = false
@@ -87,7 +99,13 @@ FROM livros;
 
  -- Selecionar com MAX e MIN: Determine o livro mais recente e o mais antigo na tabela.
  
- 
+select titulo, ano_publicacao
+from livros
+where ano_publicacao = (select max(ano_publicacao) from livros);
+
+select titulo, ano_publicacao
+from livros
+where ano_publicacao = (select min(ano_publicacao) from livros);
 
 -- Selecionar com ORDER BY: Ordene todos os livros pelo ano de publicação em ordem decrescente.
 
@@ -96,6 +114,16 @@ from livros
 order by ano_publicacao desc;
 
 --  Selecionar com UNION: Combine uma lista de todos os títulos de livros em "Inglês" com todos os títulos em "Português".
+
+SELECT titulo
+FROM livros
+WHERE idioma = 'Inglês'
+
+UNION ALL
+
+SELECT titulo
+FROM livros
+WHERE idioma = 'Português';
 
 --  Selecionar Livros de um Autor Específico: Liste todos os livros do autor "George Orwell".
 
